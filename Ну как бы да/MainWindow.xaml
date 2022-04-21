@@ -1,0 +1,148 @@
+﻿<Window x:Class="Ну_как_бы_да.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ну_как_бы_да"
+        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+       Title="Bestie" Height="600" Width="950" MinWidth="950" MinHeight="600" MaxWidth="1150" MaxHeight="700" WindowStartupLocation="CenterScreen"
+       SizeChanged="Window_SizeChanged">
+    <Window.Resources>
+        <ControlTemplate x:Key="TextBoxCercled" TargetType="{x:Type TextBoxBase}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="PasswordBoxStyle1" TargetType="{x:Type PasswordBox}">
+            <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+            <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+            <Setter Property="KeyboardNavigation.TabNavigation"
+          Value="None" />
+            <Setter Property="FocusVisualStyle"
+          Value="{x:Null}" />
+            <Setter Property="FontFamily"
+          Value="Verdana" />
+            <Setter Property="PasswordChar"
+          Value="•" />
+            <Setter Property="MinWidth"
+          Value="120" />
+            <Setter Property="MinHeight"
+          Value="20" />
+            <Setter Property="AllowDrop"
+          Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="Border"
+                CornerRadius="10"
+                Padding="2"
+                BorderThickness="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#666666" />
+                            </Border.Background>
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#666666" />
+                            </Border.BorderBrush>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled" />
+                                    <VisualState x:Name="MouseOver" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="Version3.png" x:Name="IB"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="165*"/>
+            <ColumnDefinition Width="117*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="2" Grid.RowSpan="2" Margin="0.4,0,0.2,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150*"/>
+                <ColumnDefinition Width="83*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80*"/>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="45*"/>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="46*"/>
+                <RowDefinition Height="23*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="txbLogin" Text="Login:" Grid.Row="2" Margin="5,0,0,0" Foreground="White" FontSize="16" VerticalAlignment="Bottom"/>
+            <TextBlock x:Name="txbLog" FontSize="20" Grid.Row="1" Margin="5,0,0,0" Foreground="White" Grid.ColumnSpan="2"><Run Text="Log in to your account "/><LineBreak/><Run Text="to continue:"/></TextBlock>
+            <TextBox x:Name="txtLogin" Grid.Column="0" Grid.Row="3" Background="#666666" BorderBrush="#0000FF" Foreground="Black" Template="{DynamicResource TextBoxCercled}" VerticalContentAlignment="Center" FontSize="14"/>
+            <TextBlock x:Name="txbPassword" Text="Password:" Grid.Row="4" Margin="5,0,0,0" Foreground="White" FontSize="16" VerticalAlignment="Bottom"/>
+            <PasswordBox x:Name="pswPassword" Grid.Row="5" Background="#666666" BorderBrush="#0000FF" Foreground="Black" VerticalContentAlignment="Center" Style="{DynamicResource PasswordBoxStyle1}" FontSize="14" KeyDown="pswPassword_KeyDown"/>
+            <TextBlock x:Name="txbIncorectData" Text="Incorect login or password" Grid.Row="6" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#d81b60" Visibility="Hidden"/>
+            <Grid Grid.Row="7" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnSignUp" Grid.Column="0" Content="Sign up" Margin="0,0,2,0" Height="Auto" material:ButtonAssist.CornerRadius="7" FontSize="12" Click="btnSignUp_Click"/>
+                <Button x:Name="btnSignIn" Grid.Column="1" Content="Sign in" Margin="2,0,0,0" Height="Auto" material:ButtonAssist.CornerRadius="7" FontSize="12" Click="btnSignIn_Click"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="387*"/>
+                <ColumnDefinition Width="97*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="txtName" Margin="1" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center" Background="#FF3F51B5" BorderBrush="#d81b60" Foreground="WhiteSmoke" Text="Put your name here: ex. Adam" FontSize="16" Template="{DynamicResource TextBoxCercled}" GotFocus="txtName_GotFocus" LostFocus="txtName_LostFocus" Opacity="0" SelectionBrush="White" CaretBrush="#FF4FFF00"/>
+            <TextBox x:Name="txtCreateLogin" Margin="1" Grid.Column="0" Grid.Row="2" VerticalContentAlignment="Center" Background="#FF3F51B5" BorderBrush="#d81b60" Foreground="WhiteSmoke" Text="Create login here: ex. Adam228" FontSize="16" Template="{DynamicResource TextBoxCercled}" GotFocus="txtName_GotFocus"  LostFocus="txtName_LostFocus" Opacity="0" CaretBrush="#FF4FFF00" />
+            <TextBox x:Name="txtCreatePassword" Margin="1" Grid.Column="0" Grid.Row="3" VerticalContentAlignment="Center" Background="#FF3F51B5" BorderBrush="#d81b60" Foreground="WhiteSmoke" Text="Create password here: ex. Adam1337" FontSize="16" Template="{DynamicResource TextBoxCercled}" GotFocus="txtName_GotFocus"  LostFocus="txtName_LostFocus" Opacity="0" CaretBrush="#FF4FFF00"/>
+            <TextBox x:Name="txtEmail" Margin="1" Grid.Column="0" Grid.Row="4" VerticalContentAlignment="Center" Background="#FF3F51B5" BorderBrush="#d81b60" Foreground="WhiteSmoke" Text="Put your email here: Adam@mail.ru" FontSize="16" Template="{DynamicResource TextBoxCercled}" GotFocus="txtName_GotFocus"  LostFocus="txtName_LostFocus" Opacity="0" CaretBrush="#FF4FFF00"/>
+            <Button x:Name="btnCreateAccount" Grid.Row="7" HorizontalAlignment="Center" Background="#d81b60" material:ButtonAssist.CornerRadius="8" Content="Create account" Opacity="0" Click="btnCreateAccount_Click"/>
+            <TextBox x:Name="txtVerCode" Grid.Row="6" Width="100" HorizontalAlignment="Center" BorderBrush="#d81b60" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" Foreground="White" Visibility="Hidden" TextChanged="txtVerCode_TextChanged" CaretBrush="#FF4FFF00"/>
+            <TextBlock x:Name="txbHelper" Grid.Row="5" Text="We send a cod on your email write it down below" Foreground="#e53935" FontSize="17" VerticalAlignment="Center" Visibility="Hidden"/>
+        </Grid>
+        <TextBlock x:Name="txbBfB" Grid.Row="0" FontSize="49" Foreground="White" Grid.ColumnSpan="2"><Run Text="     Best for "/><LineBreak/><Run Text="besties"/></TextBlock>
+    </Grid>
+</Window>

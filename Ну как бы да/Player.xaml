@@ -1,0 +1,198 @@
+﻿<Window x:Class="Ну_как_бы_да.Player"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ну_как_бы_да"
+        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="750" Width="1100" WindowStartupLocation="CenterScreen" MinHeight="750" MinWidth="1100" ResizeMode="NoResize">
+    <Grid Background="#FF191919">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="640*"/>
+            <RowDefinition Height="81*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205*"/>
+            <ColumnDefinition Width="735*"/>
+            <ColumnDefinition Width="154*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="24*"/>
+            </Grid.RowDefinitions>
+            <ToolBar Name="tlbBar">
+                <Button x:Name="btnDeleteSongs" Margin="1" HorizontalAlignment="Left" Click="DeleteSongs_Click" Background="#FF191919" BorderBrush="#FF191919">
+                    <StackPanel Orientation="Horizontal">
+                        <material:PackIcon Kind="DeleteCircle" Height="24" Width="30" />
+                        <TextBlock Text="Delete songs" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnAddSongsToPlaylist" Margin="1" HorizontalAlignment="Left" Click="btnAddSongsToPlaylist_Click" Background="#FF191919" BorderBrush="#FF191919" IsEnabled="False">
+                    <StackPanel Orientation="Horizontal">
+                        <material:PackIcon Kind="PlusCircle" Height="24" Width="30" />
+                        <TextBlock Text="Add songs" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnChangeName" Margin="1" HorizontalAlignment="Left" Click="btnChangeName_Click" Background="#FF191919" BorderBrush="#FF191919" IsEnabled="False">
+                    <StackPanel Orientation="Horizontal">
+                        <material:PackIcon Kind="PencilCircle" Height="24" Width="30" />
+                        <TextBlock Text="Rename playlist" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+            <DockPanel Grid.Row="1">
+                <material:PackIcon Name="Search" Kind="Search" DockPanel.Dock="Right" Width="40" Height="40" Foreground="#FFD81B60" RenderTransformOrigin="0.5,0.5"/>
+                <TextBox x:Name="txtSearch" DockPanel.Dock="Left"  TextChanged="txtSearch_TextChanged" Foreground="White" FontSize="16" VerticalContentAlignment="Bottom"/>
+            </DockPanel>
+            <TextBox x:Name="txtPlaylistName" Grid.Row="2" MaxLength="30" FontSize="30" IsReadOnly="True" Foreground="White" Margin="0,0,-0.6,0"/>
+            <DataGrid x:Name="musicData" Grid.Row="3" RowHeight="40" AutoGenerateColumns="False" CanUserAddRows="False" SelectionChanged="musicData_SelectionChanged" SelectionUnit="FullRow" SelectionMode="Single"
+                          CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" HorizontalScrollBarVisibility="Auto" CanUserSortColumns="False" FontSize="14">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Width="60" TextBlock.TextAlignment="Center" Binding="{Binding Num}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Name" Width="220" Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Artist" Width="160" Binding="{Binding Artist}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Album" Width="160" Binding="{Binding Album}" IsReadOnly="True"/>
+                    <DataGridTextColumn Width="100" Binding="{Binding IsSelected}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid x:Name="LeftPanel" Background="#0D0D0D">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition x:Name="hieghtInAnimation" Height="5*"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="stkPanel">
+                <Button x:Name="btnAddSongs" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" Background="#FF0D0D0D" BorderBrush="#FF0D0D0D" ToolTip="Select song or directory with songs" Click="btnAddSongs_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <material:PackIcon Kind="MusicNoteAdd" Width="25" Height="25"/>
+                        <TextBlock Text="Add songs" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnAllSongs" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" GotFocus="btnAllSongs_GotFocus" Click="btnAllSongs_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <material:PackIcon Kind="MusicBox" Width="25" Height="25"/>
+                        <TextBlock Text="All songs" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnCreateNewPlaylist" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" Background="#FF0D0D0D" BorderBrush="#FF0D0D0D" GotFocus="btnAllSongs_GotFocus" Click="btnCreateNewPlaylist_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <material:PackIcon Kind="PlaylistAdd" Width="25" Height="25"/>
+                        <TextBlock Text="Create new playlist" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1">
+                <StackPanel Orientation="Vertical" x:Name="stpPlaylists">
+                    <Separator Height="2"/>
+                    <Button x:Name="btnSavePlaylist" Visibility="Collapsed" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" Background="#FFD81B60" BorderBrush="#FFD81B60" Content="Save playlist" Click="btnSavePlaylist_Click"/>
+                    <Button x:Name="btnDiscardPlaylist" Visibility="Collapsed" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" Content="Discard playlist" Click="btnDiscardPlaylist_Click"/>
+                    <Button x:Name="btnSaveChanges" Visibility="Collapsed" HorizontalContentAlignment="Left" material:ButtonAssist.CornerRadius="8" Margin="5,5,15,0" Content="Save changes" Click="btnSaveChanges_Click"/>
+                    <Image x:Name="i1" Source="Resources/vizit.jpg" Stretch="Uniform"/>
+                    <Image x:Name="i2" Source="Resources/vizit2.jpg"/>
+                    <Image x:Name="i3" Source="Resources/vizit3.jpg"/>
+                    <Image x:Name="i4" Source="Resources/vizit4.jpg"/>
+                    <Image x:Name="i5" Source="Resources/vizit5.jpg"/>
+                    <ComboBox x:Name="cmbPlaylist" Margin="5,5,15,0" Foreground="White" FontSize="12" FontFamily="Segoe UI Semibold" SelectionChanged="cmbPlaylist_SelectionChanged"/>
+                </StackPanel>
+            </ScrollViewer>
+            <Image x:Name="Oblojka" Grid.Row="2" Margin="0,0,0,10"/>
+        </Grid>
+        <Grid x:Name="grdGrid" Background="#262626" Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240*"/>
+                <ColumnDefinition Width="615*"/>
+                <ColumnDefinition Width="238*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <MediaElement x:Name="ss" Grid.Row="1" Visibility="Collapsed" MediaEnded="ss_MediaEnded"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnRepeatOne" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="btnRepeatOne_Click">
+                    <material:PackIcon x:Name="kndRepeatOne" Kind="RepeatOne" Width="25" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnPriviousSong" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="btnPriviousSong_Click">
+                    <material:PackIcon Kind="SkipBackward" Width="18" Height="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnBackwardTen"  HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="Button_Click_1">
+                    <material:PackIcon Kind="FastForward10" Width="18" Height="18" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <material:PackIcon.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                <SkewTransform AngleY="0" AngleX="0"/>
+                                <RotateTransform Angle="0"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </material:PackIcon.RenderTransform>
+                    </material:PackIcon>
+                </Button>
+                <Button x:Name="btnPlayPause" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Click="btnPlayPause_Click">
+                    <material:PackIcon Name="play_pause" Kind="Play" Width="22" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnForwardTen" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="Button_Click">
+                    <material:PackIcon Kind="FastForward10" Width="18" Height="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnNextSong" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="btnNextSong_Click">
+                    <material:PackIcon Kind="SkipForward" Width="18" Height="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button x:Name="btnRepeat" HorizontalAlignment="Center" Width="45" Height="45" material:ButtonAssist.CornerRadius="45" Margin="1,0,10,0" Background="#262626" BorderBrush="#FF262626" Click="btnRepeat_Click">
+                    <material:PackIcon x:Name="kndRepeat" Kind="Repeat" Width="18" Height="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock x:Name="curent" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="0:00" Foreground="WhiteSmoke" Margin="0,0,10,0"/>
+                <Slider x:Name="sliderMusicDuration" Grid.Row="1" Grid.Column="1" Delay="1000" Minimum="0" Maximum="171" HorizontalAlignment="Center" Width="400" MouseMove="sliderMusicDuration_MouseMove"/>
+                <TextBlock x:Name="duration" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="3:24" Foreground="WhiteSmoke" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Grid Grid.Column="2" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <material:PackIcon Kind="VolumeMedium" Foreground="White" Width="20" Height="20"/>
+                    <Slider x:Name="volume" Width="100" Minimum="0" Maximum="1" Value="{Binding ElementName=ss, Path=Volume, Mode=TwoWay}" Foreground="#FFD81B60" Margin="0,0,20,0" ToolTip="Volume control"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <material:PackIcon Width="20" Height="20" Kind="Speakers" RenderTransformOrigin="0.5,0.5" Foreground="#FFE4E4E4">
+                        <material:PackIcon.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                <SkewTransform AngleY="0" AngleX="0"/>
+                                <RotateTransform Angle="0"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </material:PackIcon.RenderTransform>
+                    </material:PackIcon>
+                    <Slider x:Name="balance" Width="100" Minimum="-1" Maximum="1" Value="{Binding ElementName=ss, Path=Balance, Mode=TwoWay}" TickPlacement="Both" ToolTip="Left/Right spekers balance (Double click to return zero)" MouseDoubleClick="Slider_MouseDoubleClick"/>
+                    <material:PackIcon Width="20" Height="20" Kind="Speakers" Foreground="#FFE4E4E4"/>
+                </StackPanel>
+            </Grid>
+            <TextBlock x:Name="txbCurentSong" Foreground="White" FontSize="16" Margin="12,0,0,0"/>
+        </Grid>
+        <Grid Background="#343232" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="11*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <Ellipse Width="150" Height="150" MouseDown="Ellipse_MouseDown" ToolTipService.HasDropShadow="True" ToolTip="Double click to change profile photo">
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="imgUser" ImageSource="C:\Users\petra\OneDrive\Рабочий стол\Ну как бы да\Ну как бы да\Ну как бы да\Resources\avva.png" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBox Name="txtUser" Margin="5" IsReadOnly="True" HorizontalAlignment="Center" FontSize="18" Foreground="White"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="2,15,2,0" >
+                <Button x:Name="btnDonation" Content="Donation" Click="btnDonation_Click"/>
+                <Image x:Name="qr" Visibility="Hidden" Source="Resources/qr.jpg" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

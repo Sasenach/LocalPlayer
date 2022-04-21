@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Ну_как_бы_да.SongItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ну_как_бы_да"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="240">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="image" Grid.RowSpan="2">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
+            </Image.OpacityMask>
+        </Image>
+        <TextBlock x:Name="name" Grid.Column="1" Text="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
+        <TextBlock x:Name="artist" Grid.Column="1" Grid.Row="1" Text="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
+    </Grid>
+</UserControl>
